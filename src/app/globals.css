@@ -507,7 +507,7 @@ body {
 }
 
 .chart-panel {
-  min-height: 350px;
+  min-height: 700px;
 }
 
 .chart-header {
@@ -535,7 +535,7 @@ body {
   align-items: flex-end;
   justify-content: space-between;
   gap: 8px;
-  min-height: 260px;
+  min-height: 520px;
   border-left: 1px solid #1f1d19;
   border-bottom: 1px solid #1f1d19;
   padding: 0 8px 6px 12px;
