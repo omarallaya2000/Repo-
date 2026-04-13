@@ -758,24 +758,58 @@ body {
   flex-shrink: 0;
 }
 
-.popup-action-btn {
-  width: 32px;
-  height: 32px;
+.popup-checkbox {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 8px;
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  background: transparent;
   display: grid;
   place-items: center;
-  color: #706c5f;
   cursor: pointer;
-  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  position: relative;
+  transition: border-color 0.15s, background 0.15s;
 }
 
-.popup-action-btn:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
-  color: #dbc985;
+.popup-checkbox input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  margin: 0;
+}
+
+.popup-checkbox:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.popup-checkbox.checked {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  color: #e8e4d8;
+}
+
+.popup-checkbox svg {
+  pointer-events: none;
+}
+
+.popup-status-icon {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+
+.popup-status-icon.success {
+  color: #34d399;
+}
+
+.popup-status-icon.error {
+  color: #f87171;
 }
 
 /* ── Active pill state for Documents when popup is open ── */

@@ -19,6 +19,7 @@ type DocumentEntry = {
   name: string;
   size: string;
   date: string;
+  status: "success" | "error";
 };
 
 const metrics: Metric[] = [
@@ -102,20 +103,30 @@ const revenue = [
 ];
 
 const allDocuments: DocumentEntry[] = [
-  { name: "Bank_Statement_Aug_2025.pdf", size: "1.43 MB", date: "Feb 09, 2026" },
-  { name: "Bank_Statement_Dec_2025.pdf", size: "1.38 MB", date: "Feb 09, 2026" },
-  { name: "Bank_Statement_Jan_2026.pdf", size: "1.51 MB", date: "Feb 09, 2026" },
-  { name: "Bank_Statement_Nov_2025.pdf", size: "1.40 MB", date: "Feb 09, 2026" },
-  { name: "Bank_Statement_Oct_2025.pdf", size: "1.35 MB", date: "Feb 09, 2026" },
-  { name: "Bank_Statement_Sep_2025.pdf", size: "1.42 MB", date: "Feb 09, 2026" },
-  { name: "Tax_Return_2025.pdf", size: "2.10 MB", date: "Jan 22, 2026" },
-  { name: "Business_License.pdf", size: "0.85 MB", date: "Jan 15, 2026" },
-  { name: "Financial_Projections_Q1.xlsx", size: "0.64 MB", date: "Jan 10, 2026" },
-  { name: "UW_Report_Final.pdf", size: "3.20 MB", date: "Feb 20, 2026" },
+  { name: "Bank_Statement_Aug_2025.pdf", size: "1.43 MB", date: "Feb 09, 2026", status: "success" },
+  { name: "Bank_Statement_Dec_2025.pdf", size: "1.38 MB", date: "Feb 09, 2026", status: "success" },
+  { name: "Bank_Statement_Jan_2026.pdf", size: "1.51 MB", date: "Feb 09, 2026", status: "success" },
+  { name: "Bank_Statement_Nov_2025.pdf", size: "1.40 MB", date: "Feb 09, 2026", status: "success" },
+  { name: "Bank_Statement_Oct_2025.pdf", size: "1.35 MB", date: "Feb 09, 2026", status: "error" },
+  { name: "Bank_Statement_Sep_2025.pdf", size: "1.42 MB", date: "Feb 09, 2026", status: "success" },
+  { name: "Tax_Return_2025.pdf", size: "2.10 MB", date: "Jan 22, 2026", status: "success" },
+  { name: "Business_License.pdf", size: "0.85 MB", date: "Jan 15, 2026", status: "error" },
+  { name: "Financial_Projections_Q1.xlsx", size: "0.64 MB", date: "Jan 10, 2026", status: "success" },
+  { name: "UW_Report_Final.pdf", size: "3.20 MB", date: "Feb 20, 2026", status: "success" },
 ];
 
 function DocumentsPopup({ onClose }: { onClose: () => void }) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+
+  function toggleSelect(name: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+  }
 
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -156,42 +167,57 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
 
         <div className="popup-doc-scroll-wrapper">
           <div className="popup-doc-list">
-            {allDocuments.map((doc) => (
-              <article className="popup-doc-row" key={doc.name}>
-                <div className="popup-doc-info">
-                  <span className="popup-file-icon">
-                    <svg width="18" height="20" viewBox="0 0 18 22" fill="none">
-                      <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
-                      <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.04)" />
-                    </svg>
-                  </span>
-                  <div className="popup-doc-text">
-                    <p className="popup-doc-name">{doc.name}</p>
-                    <span className="popup-doc-detail">
-                      {doc.size} &bull; {doc.date}
+            {allDocuments.map((doc) => {
+              const isSelected = selected.has(doc.name);
+              return (
+                <article className="popup-doc-row" key={doc.name}>
+                  <div className="popup-doc-info">
+                    <span className="popup-file-icon">
+                      <svg width="18" height="20" viewBox="0 0 18 22" fill="none">
+                        <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+                        <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.04)" />
+                      </svg>
+                    </span>
+                    <div className="popup-doc-text">
+                      <p className="popup-doc-name">{doc.name}</p>
+                      <span className="popup-doc-detail">
+                        {doc.size} &bull; {doc.date}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="popup-row-actions">
+                    <label className={`popup-checkbox${isSelected ? " checked" : ""}`}>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => toggleSelect(doc.name)}
+                      />
+                      {isSelected && (
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      )}
+                    </label>
+                    <span
+                      className={`popup-status-icon ${doc.status}`}
+                      title={doc.status === "success" ? "Uploaded successfully" : "Upload issue"}
+                    >
+                      {doc.status === "success" ? (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="20 6 9 17 4 12" />
+                        </svg>
+                      ) : (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="10" strokeWidth="2" />
+                          <line x1="12" y1="8" x2="12" y2="12" />
+                          <line x1="12" y1="16" x2="12.01" y2="16" />
+                        </svg>
+                      )}
                     </span>
                   </div>
-                </div>
-                <div className="popup-row-actions">
-                  <button type="button" className="popup-action-btn" aria-label={`Download ${doc.name}`}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="7 10 12 15 17 10" />
-                      <line x1="12" y1="15" x2="12" y2="3" />
-                    </svg>
-                  </button>
-                  <button type="button" className="popup-action-btn" aria-label={`Delete ${doc.name}`}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="3 6 5 6 21 6" />
-                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                      <path d="M10 11v6" />
-                      <path d="M14 11v6" />
-                      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                    </svg>
-                  </button>
-                </div>
-              </article>
-            ))}
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
