@@ -141,89 +141,58 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
       >
         <div className="popup-header">
           <div className="popup-title-area">
-            <div className="popup-drive-icon">
-              <svg width="20" height="18" viewBox="0 0 20 18" fill="none">
-                <path
-                  d="M6.67 0L0 12l3.33 6h13.34L20 12 13.33 0H6.67zM13 2l5 8.5h-4.5L8.5 2H13zM7 2.5l5 8.5H2l5-8.5zM2.5 12h10l2.5 4H5l-2.5-4z"
-                  fill="#f8dc7a"
-                />
-              </svg>
-            </div>
             <div>
-              <h2>Google Drive</h2>
-              <span className="popup-breadcrumb">
-                Root Folder <span className="popup-sep">/</span> 88
-              </span>
+              <h2>MT Express</h2>
+              <span className="popup-breadcrumb">File name</span>
             </div>
           </div>
-          <div className="popup-header-actions">
-            <button type="button" className="popup-icon-btn" aria-label="Refresh">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="23 4 23 10 17 10" />
-                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10" />
-              </svg>
-            </button>
-            <button type="button" className="popup-upload-btn">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="17 8 12 3 7 8" />
-                <line x1="12" y1="3" x2="12" y2="15" />
-              </svg>
-              Upload
-            </button>
-            <button type="button" className="popup-icon-btn popup-more" aria-label="More options">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="5" r="1" />
-                <circle cx="12" cy="12" r="1" />
-                <circle cx="12" cy="19" r="1" />
-              </svg>
-            </button>
-            <button type="button" className="popup-close-btn" onClick={onClose} aria-label="Close">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-          </div>
+          <button type="button" className="popup-close-btn" onClick={onClose} aria-label="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
         </div>
 
-        <div className="popup-doc-list">
-          {allDocuments.map((doc) => (
-            <article className="popup-doc-row" key={doc.name}>
-              <div className="popup-doc-info">
-                <span className="popup-file-icon">
-                  <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
-                    <path
-                      d="M2 0C.9 0 0 .9 0 2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6l-6-6H2z"
-                      fill="#2a2619"
-                    />
-                    <path d="M10 0v4c0 1.1.9 2 2 2h4L10 0z" fill="#3e3726" />
-                    <text x="3" y="14" fontSize="5" fill="#d8b95e" fontWeight="600">
-                      PDF
-                    </text>
-                  </svg>
-                </span>
-                <div>
-                  <p className="popup-doc-name">{doc.name}</p>
-                  <span className="popup-doc-detail">
-                    {doc.size} &bull; {doc.date}
+        <div className="popup-doc-scroll-wrapper">
+          <div className="popup-doc-list">
+            {allDocuments.map((doc) => (
+              <article className="popup-doc-row" key={doc.name}>
+                <div className="popup-doc-info">
+                  <span className="popup-file-icon">
+                    <svg width="18" height="20" viewBox="0 0 18 22" fill="none">
+                      <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+                      <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.04)" />
+                    </svg>
                   </span>
+                  <div className="popup-doc-text">
+                    <p className="popup-doc-name">{doc.name}</p>
+                    <span className="popup-doc-detail">
+                      {doc.size} &bull; {doc.date}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <button type="button" className="popup-dl-btn" aria-label={`Download ${doc.name}`}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-              </button>
-            </article>
-          ))}
-        </div>
-
-        <div className="popup-footer">
-          <span className="popup-footer-count">{allDocuments.length} documents</span>
-          <span className="popup-footer-path">Google Drive / Root Folder / 88</span>
+                <div className="popup-row-actions">
+                  <button type="button" className="popup-action-btn" aria-label={`Download ${doc.name}`}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
+                    </svg>
+                  </button>
+                  <button type="button" className="popup-action-btn" aria-label={`Delete ${doc.name}`}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                      <path d="M10 11v6" />
+                      <path d="M14 11v6" />
+                      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                    </svg>
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </div>
     </div>
