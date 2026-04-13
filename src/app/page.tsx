@@ -220,31 +220,6 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
           </div>
         </div>
 
-        <div
-          className={`popup-dropzone${dragOver ? " drag-over" : ""}`}
-          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
-          onDragLeave={() => setDragOver(false)}
-          onDrop={handleDrop}
-          onClick={() => fileInputRef.current?.click()}
-        >
-          <input
-            ref={fileInputRef}
-            type="file"
-            multiple
-            className="popup-file-input"
-            onChange={handleFileSelect}
-          />
-          <span className="popup-dropzone-icon">
-            <svg width="24" height="28" viewBox="0 0 18 22" fill="none">
-              <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
-              <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.05)" />
-            </svg>
-          </span>
-          <p className="popup-dropzone-title">Drag Documents Here</p>
-          <span className="popup-dropzone-or">or</span>
-          <span className="popup-dropzone-cta">CLICK TO UPLOAD</span>
-        </div>
-
         <div className="popup-doc-scroll-wrapper">
           <div className="popup-doc-list">
             {docs.map((doc) => {
@@ -298,6 +273,31 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
                 </article>
               );
             })}
+
+            <div
+              className={`popup-dropzone${dragOver ? " drag-over" : ""}`}
+              onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={handleDrop}
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <input
+                ref={fileInputRef}
+                type="file"
+                multiple
+                className="popup-file-input"
+                onChange={handleFileSelect}
+              />
+              <span className="popup-dropzone-icon">
+                <svg width="24" height="28" viewBox="0 0 18 22" fill="none">
+                  <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+                  <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.05)" />
+                </svg>
+              </span>
+              <p className="popup-dropzone-title">Drag Documents Here</p>
+              <span className="popup-dropzone-or">or</span>
+              <span className="popup-dropzone-cta">CLICK TO UPLOAD</span>
+            </div>
           </div>
         </div>
       </div>
