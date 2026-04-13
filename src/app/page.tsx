@@ -117,7 +117,11 @@ const allDocuments: DocumentEntry[] = [
 
 function DocumentsPopup({ onClose }: { onClose: () => void }) {
   const dialogRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [docs, setDocs] = useState(allDocuments);
+  const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
 
   function toggleSelect(name: string) {
     setSelected((prev) => {
@@ -126,6 +130,43 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
       else next.add(name);
       return next;
     });
+  }
+
+  function simulateUpload(files: FileList | File[]) {
+    if (files.length === 0) return;
+    setUploading(true);
+
+    const newDocs: DocumentEntry[] = Array.from(files).map((f) => ({
+      name: f.name,
+      size: `${(f.size / (1024 * 1024)).toFixed(2)} MB`,
+      date: new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" }),
+      status: "success" as const,
+    }));
+
+    setTimeout(() => {
+      setDocs((prev) => {
+        const updated = newDocs.map((d) =>
+          Math.random() > 0.2 ? d : { ...d, status: "error" as const }
+        );
+        return [...updated, ...prev];
+      });
+      setUploading(false);
+    }, 2000);
+  }
+
+  function handleDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setDragOver(false);
+    if (e.dataTransfer.files.length > 0) {
+      simulateUpload(e.dataTransfer.files);
+    }
+  }
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.files && e.target.files.length > 0) {
+      simulateUpload(e.target.files);
+      e.target.value = "";
+    }
   }
 
   useEffect(() => {
@@ -157,17 +198,56 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
               <span className="popup-breadcrumb">File name</span>
             </div>
           </div>
-          <button type="button" className="popup-close-btn" onClick={onClose} aria-label="Close">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
+          <div className="popup-header-right">
+            {uploading && (
+              <div className="popup-uploading">
+                <span className="popup-uploading-icon">
+                  <svg width="14" height="14" viewBox="0 0 18 22" fill="none">
+                    <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                    <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.06)" />
+                  </svg>
+                </span>
+                <span className="popup-uploading-text">Uploading...</span>
+                <span className="popup-spinner" />
+              </div>
+            )}
+            <button type="button" className="popup-close-btn" onClick={onClose} aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`popup-dropzone${dragOver ? " drag-over" : ""}`}
+          onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+          onDragLeave={() => setDragOver(false)}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            className="popup-file-input"
+            onChange={handleFileSelect}
+          />
+          <span className="popup-dropzone-icon">
+            <svg width="24" height="28" viewBox="0 0 18 22" fill="none">
+              <path d="M2 0C.9 0 0 .9 0 2v18c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V7l-7-7H2z" fill="#1e1b14" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" />
+              <path d="M11 0v5c0 1.1.9 2 2 2h5L11 0z" fill="rgba(255,255,255,0.05)" />
             </svg>
-          </button>
+          </span>
+          <p className="popup-dropzone-title">Drag Documents Here</p>
+          <span className="popup-dropzone-or">or</span>
+          <span className="popup-dropzone-cta">CLICK TO UPLOAD</span>
         </div>
 
         <div className="popup-doc-scroll-wrapper">
           <div className="popup-doc-list">
-            {allDocuments.map((doc) => {
+            {docs.map((doc) => {
               const isSelected = selected.has(doc.name);
               return (
                 <article className="popup-doc-row" key={doc.name}>
