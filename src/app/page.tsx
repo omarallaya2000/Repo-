@@ -132,6 +132,16 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
     });
   }
 
+  const allSelected = docs.length > 0 && docs.every((d) => selected.has(d.name));
+
+  function toggleAll() {
+    if (allSelected) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(docs.map((d) => d.name)));
+    }
+  }
+
   function simulateUpload(files: FileList | File[]) {
     if (files.length === 0) return;
     setUploading(true);
@@ -218,6 +228,22 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
               </svg>
             </button>
           </div>
+        </div>
+
+        <div className="popup-table-header">
+          <span className="popup-table-label">File name</span>
+          <label className={`popup-checkbox${allSelected ? " checked" : ""}`}>
+            <input
+              type="checkbox"
+              checked={allSelected}
+              onChange={toggleAll}
+            />
+            {allSelected && (
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            )}
+          </label>
         </div>
 
         <div className="popup-doc-scroll-wrapper">

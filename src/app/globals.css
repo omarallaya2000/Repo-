@@ -598,7 +598,8 @@ body {
 .popup-container {
   width: 620px;
   max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 60px);
+  min-height: 520px;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   background: rgba(14, 14, 13, 0.82);
@@ -760,6 +761,22 @@ body {
   letter-spacing: 0.04em;
 }
 
+.popup-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 26px 10px 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.popup-table-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #706c5f;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .popup-doc-scroll-wrapper {
   position: relative;
   flex: 1;
@@ -769,10 +786,10 @@ body {
 .popup-doc-list {
   height: 100%;
   overflow-y: auto;
-  padding: 8px 14px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   scrollbar-width: thin;
   scrollbar-color: #2d2819 transparent;
 }
