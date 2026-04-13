@@ -4,10 +4,10 @@
   "private": true,
   "description": "Frontend-only Next.js UI clone",
   "scripts": {
-    "dev": "next dev -p 4000",
-    "preview": "next dev -p 4000",
+    "dev": "next dev -p 6001",
+    "preview": "next dev -p 6001",
     "build": "next build",
-    "start": "next start -p 4000",
+    "start": "next start -p 6001",
     "lint": "eslint . --max-warnings=0"
   },
   "keywords": [],
