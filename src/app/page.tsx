@@ -227,19 +227,7 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
                 <span className="popup-spinner" />
               </div>
             )}
-            <button type="button" className="popup-close-btn" onClick={onClose} aria-label="Close">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div className="popup-table-header">
-          <span className="popup-table-label">File name</span>
-          <div className="popup-row-actions">
-            <label className={`popup-checkbox${allSelected ? " checked" : ""}`}>
+            <label className={`popup-checkbox${allSelected ? " checked" : ""}`} title="Select all">
               <input
                 type="checkbox"
                 checked={allSelected}
@@ -255,7 +243,7 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
               type="button"
               className={`popup-delete-all-btn${selected.size > 0 ? " active" : ""}`}
               onClick={deleteSelected}
-              title="Delete selected documents"
+              title="Delete selected"
               aria-label="Delete selected documents"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -264,6 +252,12 @@ function DocumentsPopup({ onClose }: { onClose: () => void }) {
                 <path d="M19 6l-.867 12.142A2 2 0 0 1 16.138 20H7.862a2 2 0 0 1-1.995-1.858L5 6" />
                 <line x1="10" y1="11" x2="10" y2="17" />
                 <line x1="14" y1="11" x2="14" y2="17" />
+              </svg>
+            </button>
+            <button type="button" className="popup-close-btn" onClick={onClose} aria-label="Close">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
           </div>
