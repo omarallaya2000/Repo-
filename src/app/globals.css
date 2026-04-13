@@ -648,7 +648,7 @@ body {
 .popup-header-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 
 .popup-uploading {
@@ -864,7 +864,7 @@ body {
 .popup-row-actions {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 14px;
   flex-shrink: 0;
 }
 
