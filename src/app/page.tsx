@@ -110,9 +110,6 @@ const allDocuments: DocumentEntry[] = [
   { name: "Bank_Statement_Oct_2025.pdf", size: "1.35 MB", date: "Feb 09, 2026", status: "error" },
   { name: "Bank_Statement_Sep_2025.pdf", size: "1.42 MB", date: "Feb 09, 2026", status: "success" },
   { name: "Tax_Return_2025.pdf", size: "2.10 MB", date: "Jan 22, 2026", status: "success" },
-  { name: "Business_License.pdf", size: "0.85 MB", date: "Jan 15, 2026", status: "error" },
-  { name: "Financial_Projections_Q1.xlsx", size: "0.64 MB", date: "Jan 10, 2026", status: "success" },
-  { name: "UW_Report_Final.pdf", size: "3.20 MB", date: "Feb 20, 2026", status: "success" },
 ];
 
 function DocumentsPopup({ onClose }: { onClose: () => void }) {
