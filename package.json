@@ -1,0 +1,29 @@
+{
+  "name": "opportunity-ui-clone",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend-only Next.js UI clone",
+  "scripts": {
+    "dev": "next dev -p 6001",
+    "preview": "next dev -p 6001",
+    "build": "next build",
+    "start": "next start -p 6001",
+    "lint": "eslint . --max-warnings=0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^16.2.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/node": "^25.5.2",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.3",
+    "typescript": "^6.0.2"
+  }
+}
